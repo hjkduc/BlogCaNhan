@@ -3,7 +3,6 @@
  // FACEBOOK: https://www.facebook.com/Ltadduc
  // GITHUB: https://github.com/hjkduc
 -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +40,7 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ul id="menu" class="menu navbar-nav">
-						<li class="nav-item dropdown">
+												<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
 								Home
@@ -76,29 +75,18 @@
 			<div class="row">
 				<div class="col-lg-8 col-md-8">
 					<article class="post-grid mb-5">
-						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 3</span>
-						<h2 class="mb-1 mt-2 post-title"><a href="#">Stream I/O: Dòng chảy dữ liệu trong Java</a></h2>
+						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 8</span>
+						<h2 class="mb-1 mt-2 post-title"><a href="#">Kỹ thuật nâng cao: Multicast và Java RMI</a></h2>
 						<div class="post-content mt-4">
-							<p>Trong Java, mọi hoạt động nhập/xuất (I/O) đều dựa trên khái niệm <strong>Stream (luồng)</strong>. Một luồng là một chuỗi dữ liệu tuần tự, có thể đến từ nhiều nguồn khác nhau như file, bàn phím, hoặc một kết nối mạng.</p>
-							<p>Khi lập trình Socket, chúng ta sử dụng các luồng để gửi và nhận dữ liệu giữa Client và Server.</p>
-							<h4 class="mt-4">Các loại Stream chính:</h4>
-							<ul>
-								<li><strong>InputStream:</strong> Luồng dùng để đọc dữ liệu. Phương thức cốt lõi là <code>read()</code>.</li>
-								<li><strong>OutputStream:</strong> Luồng dùng để ghi dữ liệu. Phương thức cốt lõi là <code>write()</code>.</li>
-							</ul>
-							<p>Java cung cấp nhiều lớp "trang trí" (Decorator) để tăng cường chức năng cho các luồng cơ bản. Ví dụ, để gửi văn bản một cách hiệu quả qua Socket, chúng ta thường làm như sau:</p>
-							<pre><code class="language-java">
-// Lấy luồng output cơ bản từ Socket
-OutputStream outputStream = socket.getOutputStream();
-
-// Bọc nó bằng một PrintWriter để có thể gửi văn bản theo từng dòng
-PrintWriter writer = new PrintWriter(outputStream, true); // true để tự động flush
-
-// Gửi dữ liệu
-writer.println("Hello Server!");
-							</code></pre>
+							<p>Sau khi đã nắm vững TCP, UDP và đa luồng, chúng ta sẽ tìm hiểu hai kỹ thuật nâng cao giúp giải quyết các bài toán phức tạp hơn trong lập trình mạng.</p>
+							<h4 class="mt-4">1. UDP Multicast</h4>
+							<p>Thông thường, UDP hoạt động theo kiểu <strong>Unicast</strong> (1 gửi, 1 nhận) hoặc <strong>Broadcast</strong> (1 gửi, tất cả nhận). Tuy nhiên, có những trường hợp chúng ta chỉ muốn gửi dữ liệu đến một <strong>nhóm</strong> các máy tính cụ thể. Đó là lúc <strong>Multicast</strong> phát huy tác dụng.</p>
+							<p>Máy gửi sẽ gửi một gói tin đến một địa chỉ IP Multicast đặc biệt (từ <code>224.0.0.0</code> đến <code>239.255.255.255</code>). Các máy tính muốn nhận dữ liệu chỉ cần "tham gia" vào nhóm Multicast đó. Kỹ thuật này rất hiệu quả trong các ứng dụng như truyền hình trực tuyến, game nhiều người chơi, hoặc các hệ thống cập nhật thông tin chứng khoán.</p>
+							<h4 class="mt-4">2. Java RMI (Remote Method Invocation)</h4>
+							<p><strong>RMI</strong> là một cơ chế mạnh mẽ của Java cho phép một đối tượng trên một máy tính có thể gọi phương thức của một đối tượng trên một máy tính khác, như thể chúng đang chạy trên cùng một máy.</p>
+							<p>RMI giúp trừu tượng hóa toàn bộ phần lập trình Socket phức tạp. Thay vì phải tự xử lý luồng, gói tin, bạn chỉ cần định nghĩa một interface, triển khai nó trên Server, và Client có thể gọi các phương thức đó từ xa. Đây là nền tảng cho nhiều hệ thống phân tán trong Java.</p>
 							<blockquote class="blockquote">
-								<p>Việc kết hợp các lớp Stream một cách khéo léo giúp việc xử lý dữ liệu mạng trở nên đơn giản và mạnh mẽ hơn rất nhiều.</p>
+								<p>Multicast và RMI là những công cụ mạnh mẽ, giúp nâng tầm các ứng dụng mạng từ đơn giản lên thành các hệ thống phân tán phức tạp và hiệu quả.</p>
 							</blockquote>
 						</div>
 					</article>

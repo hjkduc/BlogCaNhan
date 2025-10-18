@@ -3,7 +3,6 @@
  // FACEBOOK: https://www.facebook.com/Ltadduc
  // GITHUB: https://github.com/hjkduc
 -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +40,7 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ul id="menu" class="menu navbar-nav">
-						<li class="nav-item dropdown">
+												<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
 								Home
@@ -76,29 +75,61 @@
 			<div class="row">
 				<div class="col-lg-8 col-md-8">
 					<article class="post-grid mb-5">
-						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 3</span>
-						<h2 class="mb-1 mt-2 post-title"><a href="#">Stream I/O: Dòng chảy dữ liệu trong Java</a></h2>
+						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 7</span>
+						<h2 class="mb-1 mt-2 post-title"><a href="#">Đa tuyến (Multithreading): "Siêu năng lực" của các Server hiện đại</a></h2>
 						<div class="post-content mt-4">
-							<p>Trong Java, mọi hoạt động nhập/xuất (I/O) đều dựa trên khái niệm <strong>Stream (luồng)</strong>. Một luồng là một chuỗi dữ liệu tuần tự, có thể đến từ nhiều nguồn khác nhau như file, bàn phím, hoặc một kết nối mạng.</p>
-							<p>Khi lập trình Socket, chúng ta sử dụng các luồng để gửi và nhận dữ liệu giữa Client và Server.</p>
-							<h4 class="mt-4">Các loại Stream chính:</h4>
+							<p>Một Server TCP đơn luồng chỉ có thể phục vụ một Client tại một thời điểm. Client khác muốn kết nối sẽ phải xếp hàng chờ đợi, một kịch bản không thể chấp nhận được trong thực tế.</p>
+							<p><strong>Đa tuyến (Multithreading)</strong> là giải pháp cho vấn đề này. Ý tưởng rất đơn giản: khi có một client mới kết nối, thay vì tự mình xử lý, luồng chính sẽ tạo ra một luồng (Thread) mới và giao phó client đó cho luồng này chăm sóc. Sau đó, luồng chính ngay lập tức quay lại lắng nghe các yêu cầu kết nối mới.</p>
+							<h4 class="mt-4">Lợi ích của mô hình Server Đa tuyến</h4>
 							<ul>
-								<li><strong>InputStream:</strong> Luồng dùng để đọc dữ liệu. Phương thức cốt lõi là <code>read()</code>.</li>
-								<li><strong>OutputStream:</strong> Luồng dùng để ghi dữ liệu. Phương thức cốt lõi là <code>write()</code>.</li>
+								<li><strong>Khả năng mở rộng (Scalability):</strong> Server có thể phục vụ hàng trăm, hàng ngàn kết nối đồng thời.</li>
+								<li><strong>Tính đáp ứng (Responsiveness):</strong> Server luôn sẵn sàng chấp nhận kết nối mới ngay lập tức.</li>
+								<li><strong>Tận dụng tài nguyên:</strong> Các luồng có thể chạy song song trên các nhân CPU khác nhau.</li>
 							</ul>
-							<p>Java cung cấp nhiều lớp "trang trí" (Decorator) để tăng cường chức năng cho các luồng cơ bản. Ví dụ, để gửi văn bản một cách hiệu quả qua Socket, chúng ta thường làm như sau:</p>
-							<pre><code class="language-java">
-// Lấy luồng output cơ bản từ Socket
-OutputStream outputStream = socket.getOutputStream();
-
-// Bọc nó bằng một PrintWriter để có thể gửi văn bản theo từng dòng
-PrintWriter writer = new PrintWriter(outputStream, true); // true để tự động flush
-
-// Gửi dữ liệu
-writer.println("Hello Server!");
+							<h4 class="mt-4">Code minh họa trong Java</h4>
+							<p>Cách tiếp cận phổ biến là tạo một lớp riêng để xử lý logic cho mỗi client, và lớp này sẽ triển khai (implement) giao diện `Runnable`.</p>
+							<p><strong>Server chính (luồng chính):</strong></p>
+							<pre><code>
+// MultiThreadServer.java
+import java.net.*;
+import java.io.*;
+public class MultiThreadServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket welcomeSocket = new ServerSocket(6789);
+        System.out.println("Server is listening...");
+        while (true) {
+            Socket connectionSocket = welcomeSocket.accept();
+            System.out.println("New client connected!");
+            ClientHandler handler = new ClientHandler(connectionSocket);
+            new Thread(handler).start();
+        }
+    }
+}
+							</code></pre>
+							<p><strong>Lớp xử lý Client (luồng con):</strong></p>
+							<pre><code>
+// ClientHandler.java
+import java.net.*;
+import java.io.*;
+class ClientHandler implements Runnable {
+    private Socket clientSocket;
+    public ClientHandler(Socket socket) { this.clientSocket = socket; }
+    public void run() {
+        try {
+            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            DataOutputStream outToClient = new DataOutputStream(clientSocket.getOutputStream());
+            String clientSentence;
+            while ((clientSentence = inFromClient.readLine()) != null) {
+                outToClient.writeBytes(clientSentence.toUpperCase() + '\n');
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
 							</code></pre>
 							<blockquote class="blockquote">
-								<p>Việc kết hợp các lớp Stream một cách khéo léo giúp việc xử lý dữ liệu mạng trở nên đơn giản và mạnh mẽ hơn rất nhiều.</p>
+								<p>Việc nắm vững đa tuyến là một bước nhảy vọt trong tư duy thiết kế phần mềm, cho phép bạn xây dựng các ứng dụng mạnh mẽ, hiệu quả và có khả năng phục vụ lượng lớn người dùng.</p>
 							</blockquote>
 						</div>
 					</article>
