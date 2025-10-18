@@ -1,103 +1,70 @@
-<!DOCTYPE html>
-
 <!--
  // WEBSITE: https://blog-ca-nhan.vercel.app/
  // FACEBOOK: https://www.facebook.com/Ltadduc
  // GITHUB: https://github.com/hjkduc
 -->
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>BLOG CÁ NHÂN</title>
+    <title>BlogCaNhan - 2280600721 - Le Tran Anh Duc</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!--Favicon-->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 
-    <!-- THEME CSS
-	================================================== -->
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
-    <!-- Themify -->
     <link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
-    <link rel="stylesheet" href="plugins/slick-carousel/slick-theme.css">
-    <link rel="stylesheet" href="plugins/slick-carousel/slick.css">
-    <!-- Slick Carousel -->
-    <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css">
-    <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
-    <!-- manin stylesheet -->
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+		.ti-github:before { 
+            content: "\e69b"; 
+            font-family: 'themify'; 
+        }
+        .follow-socials a.github {
+            background: #c9c9c9;
+        }
+        .certificate-image {
+            border: 1px solid #eee;
+            padding: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-radius: 5px;
+            width: 100%;
+        }
+        .profile-image-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem; /* Khoảng cách dưới ảnh */
+        }
+        .profile-image-container img {
+            max-width: 100%; /* Đảm bảo ảnh không bị tràn */
+            height: auto;
+            border-radius: 8px; /* Bo tròn nhẹ góc ảnh */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Tạo bóng nhẹ */
+        }
+	</style>
 </head>
 
 <body>
     <header class="header-top bg-grey justify-content-center">
         <nav class="navbar navbar-expand-lg navigation">
             <div class="container">
-                <a class="navbar-brand d-lg-none" href="index.html"><img src="" alt=""
-                        class="img-fluid"></a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand d-lg-none" href="index.html"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="ti-menu"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul id="menu" class="menu navbar-nav ">
-                        <li class="nav-item dropdown  pl-0">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Home
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="index.html">Home</a>
-                                <a class="dropdown-item" href="index-2.html">Home 1</a>
-                                <a class="dropdown-item" href="index-3.html">Home 2</a>
-                                <a class="dropdown-item" href="index-4.html">Home 3</a>
-                                <a class="dropdown-item" href="index-5.html">Home 4</a>
-                                <a class="dropdown-item" href="index-6.html">Home 5</a>
-                                <a class="dropdown-item" href="index-7.html">Home 6</a>
-                                <a class="dropdown-item" href="index-8.html">Home 7</a>
-                                <a class="dropdown-item" href="index-9.html">Home 8</a>
-                            </div>
-                        </li>
-
+                        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
                         <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                        <li class="nav-item d-lg-none">
-                            <div class="search_toggle p-3 d-inline-block bg-white"><i class="ti-search"></i></div>
-                        </li>
                     </ul>
-                </div>
-
-                <div class="text-right search d-none d-lg-block">
-                    <div class="search_toggle"><i class="ti-search"></i></div>
                 </div>
             </div>
         </nav>
-
     </header>
-    <!--search overlay start-->
-    <div class="search-wrap">
-        <div class="overlay">
-            <form action="#" class="search-form">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 col-9">
-                            <input type="text" class="form-control" placeholder="Search..." />
-                        </div>
-                        <div class="col-md-2 col-3 text-right">
-                            <div class="search_toggle toggle-wrap d-inline-block">
-                                <i class="ti-close"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!--search overlay end-->
 
     <div class="breadcrumb-wrapper">
         <div class="container">
@@ -111,131 +78,67 @@
         </div>
     </div>
 
-
     <section class="pt-5 padding-bottom">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-12">
+                    <div class="profile-image-container">
+                        <img src="images/about.jpg" alt="Anh Duc" class="img-fluid">
+                    </div>
+                    
                     <div class="row">
-                        <div class="col-lg-12">
-                            <img src="images/about.jpg" alt="" class="img-fluid w-100">
+                        <div class="col-lg-4">
+                            <h5 class="text-uppercase letter-spacing mb-4">Tôi là ai?</h5>
+                            <p>Xin chào! Tôi là Lê Trần Anh Đức, đến từ Lâm Đồng. Hiện tại tôi đang học chuyên ngành An ninh mạng tại Đại học Công Nghệ TPHCM (HUTECH). Đây là blog cá nhân của tôi, rất mong nhận được góp ý của thầy cô để blog hoàn thiện hơn. Xin cảm ơn!</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <h5 class="text-uppercase letter-spacing mb-4">Mong muốn tương lai</h5>
+                            <p>Tôi hy vọng có thể trở thành một chuyên gia trong lĩnh vực An ninh mạng, góp phần xây dựng một môi trường Internet an toàn hơn. Tôi sẽ không ngừng học hỏi, trau dồi kỹ năng và tìm kiếm cơ hội để thực hành và nghiên cứu.</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <h5 class="text-uppercase letter-spacing mb-4">Follow Me :</h5>
+                            <div class="follow-socials">
+                                <a href="https://www.facebook.com/Ltadduc" target="_blank" class="fb"><i class="ti-facebook"></i></a>
+                                <a href="https://github.com/hjkduc" target="_blank" class="github"><i class="ti-github"></i></a>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row justify-content-center mt-5">
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <h5 class="text-uppercase letter-spacing mb-4">Tôi là ai?</h5>
-                                    <p>Xin chào! Mình là Lê Trần Anh Đức. Mình đến từ Lâm Đồng. Hiện tại mình đang học ngành CNTT (Chuyên ngành An ninh mạng) tại Đại học Công Nghệ TPHCM (HUTECH). Đây là blog cá nhân của mình rất mong các anh/chị góp ý để mình hoàn thiện hơn. Xin cảm ơn!</p>
+                    <div class="row mt-5 pt-5 border-top">
+                        <div class="col-12 text-center">
+                            <h3 class="mb-4">Các chứng chỉ đã đạt được</h3>
+                        </div>
 
-                                </div>
-                                <div class="col-lg-4">
-                                    <h5 class="text-uppercase letter-spacing mb-4">Mong muốn tương lai</h5>
-                                    <p>Mình hy vọng có thể trở thành một chuyên gia trong lĩnh vực An ninh mạng, đóng góp vào việc xây dựng một môi trường Internet an toàn và đáng tin cậy hơn. Mình đặc biệt quan tâm đến các vấn đề như bảo mật hệ thống, phòng chống tấn công mạng và nâng cao nhận thức cộng đồng về an toàn thông tin. Trong thời gian tới, mình sẽ không ngừng học hỏi, trau dồi kỹ năng và tìm kiếm cơ hội để thực hành, nghiên cứu cũng như hợp tác với những người có cùng đam mê trong lĩnh vực này.</p>
-                                </div>
-                                <div class="col-lg-4">
-                                    <h5 class="text-uppercase letter-spacing mb-4">Follow Me :</h5>
-                                    <div class="follow-socials">
-                                        <a href="#" class="fb"><i class="ti-facebook"></i></a>
-                                        <a href="#" class="twt"><i class="ti-twitter"></i></a>
-                                        <a href="#" class="inst"><i class="ti-instagram"></i></a>
-                                        <a href="#" class="youtube"><i class="ti-youtube"></i></a>
-                                        <a href="#" class="pint"><i class="ti-pinterest"></i></a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <img src="images/chung-chi-1.jpg" alt="Chứng chỉ 1" class="certificate-image">
+                        </div>
 
-                            <h3 class="mb-3 mt-5">Huy hiệu cá nhân</h3>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                             <img src="images/chung-chi-2.jpg" alt="Chứng chỉ 2" class="certificate-image">
+                        </div>
 
-                            <div class="row">
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="about-widget mb-4 mb-lg-0">
-                                        <img src="images/news/news-1.jpg" alt="" class="img-fluid">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="about-widget mb-4 mb-lg-0">
-                                        <img src="images/news/news-2.jpg" alt="" class="img-fluid">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="about-widget mb-4 mb-lg-0">
-                                        <img src="images/news/news-3.jpg" alt="" class="img-fluid">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="about-widget mb-4 mb-lg-0">
-                                        <img src="images/news/news-4.jpg" alt="" class="img-fluid">
-                                    </div>
-                                </div>
-                            </div>
-
-
+                        <div class="col-lg-4 col-md-6 mb-4">
+                             <img src="images/chung-chi-3.jpg" alt="Chứng chỉ 3" class="certificate-image">
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
 
-
-    <!--footer start-->
     <footer class="footer-section bg-grey">
-        <div class="instagram-photo-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h4 class="text-center">Cảm ơn các anh/chị đã đóng góp giúp mình hoàn thiện hơn</h4>
-                    </div>
-                </div>
-
-                <div class="row no-gutters" id="instafeed">
-
-                </div>
-            </div>
-        </div>
-        </div>
-
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="mb-4">
-                        <h2 class="footer-logo" style="color: black;">Thanks</h2>
-
-                    </div>
-                    <ul class="list-inline footer-socials">
-                    </ul>
-                </div>
-
                 <div class="col-md-12 text-center">
-                    <p class="copyright">© Copyright 2025 - Lê Trần Anh Đức 
+                    <p class="copyright">© Copyright 2025 - Lê Trần Anh Đức</p>
                 </div>
             </div>
         </div>
     </footer>
-    <!--footer end-->
-
-    <!-- THEME JAVASCRIPT FILES
-================================================== -->
-    <!-- initialize jQuery Library -->
     <script src="plugins/jquery/jquery.js"></script>
-    <!-- Bootstrap jQuery -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="plugins/bootstrap/js/popper.min.js"></script>
-    <!-- Owl caeousel -->
-    <script src="plugins/owl-carousel/owl.carousel.min.js"></script>
-    <script src="plugins/slick-carousel/slick.min.js"></script>
-    <script src="plugins/magnific-popup/magnific-popup.js"></script>
-    <!-- Instagram Feed Js -->
-    <script src="plugins/instafeed-js/instafeed.min.js"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script src="plugins/google-map/gmap.js"></script>
-    <!-- main js -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="js/custom.js"></script>
 
 </body>
-
 </html>
