@@ -520,6 +520,13 @@ overlay search
 }
 
 @media (max-width: 768px) {
+    .footer-section .copyright {
+        padding: 20px 15px 25px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
 
   .overlay nav,
   .overlay .search-blog-post {
@@ -1383,15 +1390,21 @@ footer
 }
 
 .footer-section .copyright {
-  padding-top: 20px;
-  margin-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.09);
-  color: rgba(255, 255, 255, 0.7);
+    text-align: center !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 25px 0 30px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    backdrop-filter: blur(10px);
+    line-height: 1.6;
 }
 
 .copyright {
-  font-size: 14px;
-  padding-top: 20px;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
 }
 
 .footer-socials li,
