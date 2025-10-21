@@ -77,48 +77,72 @@
 				<div class="col-lg-8 col-md-8">
 					<article class="post-grid mb-5">
 						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 4</span>
-						<h2 class="mb-1 mt-2 post-title"><a href="#">Làm việc với địa chỉ mạng trong Java</a></h2>
+						<h2 class="mb-1 mt-2 post-title"><a href="#">Làm việc với địa chỉ mạng: Chi tiết về lớp InetAddress</a></h2>
 						<div class="post-content mt-4">
-							<p>
-								Trước khi tạo ra các kết nối, một ứng dụng mạng cần biết "nói chuyện" với ai. Điều này được thực hiện thông qua các địa chỉ mạng. Java cung cấp lớp <code>InetAddress</code> để làm việc với cả địa chỉ IP (IPv4 và IPv6) và tên miền (hostname).
-							</p>
-							<h4 class="mt-4">Lớp InetAddress là gì?</h4>
-							<p>
-								Lớp <code>InetAddress</code> không có hàm khởi tạo (constructor) công khai. Thay vào đó, chúng ta sử dụng các phương thức tĩnh (static methods) để tạo ra các đối tượng của nó. Điều này giúp quản lý và phân giải tên miền một cách hiệu quả hơn.
-							</p>
-							<h4 class="mt-4">Các phương thức phổ biến</h4>
-							<ul>
-								<li><strong><code>getByName(String host)</code></strong>: Phương thức quan trọng nhất. Nó nhận vào một tên miền (ví dụ: <code>"google.com"</code>) hoặc một chuỗi địa chỉ IP và trả về một đối tượng <code>InetAddress</code>. Quá trình này được gọi là phân giải DNS.</li>
-								<li><strong><code>getLocalHost()</code></strong>: Trả về địa chỉ của máy tính cục bộ (localhost).</li>
-								<li><strong><code>getAllByName(String host)</code></strong>: Trả về một mảng các địa chỉ IP nếu một tên miền trỏ đến nhiều máy chủ.</li>
-								<li><strong><code>getHostName()</code> / <code>getHostAddress()</code></strong>: Sau khi có đối tượng <code>InetAddress</code>, hai phương thức này giúp lấy ra tên miền và địa chỉ IP tương ứng.</li>
-							</ul>
-							<h4 class="mt-4">Ví dụ thực tế</h4>
+							<p>Trước khi bất kỳ kết nối mạng nào được thiết lập, ứng dụng của bạn phải giải quyết được câu hỏi: "Mình đang nói chuyện với ai?" Câu trả lời nằm ở lớp `java.net.InetAddress`. Lớp này đóng vai trò là đại diện lập trình cho cả địa chỉ IP (cục bộ và từ xa) và tên miền (hostname).</p>
+
+							<h4 class="mt-4">1. Cơ chế hoạt động: Phân giải DNS</h4>
+							<p>Khi bạn gọi `InetAddress.getByName("google.com")`, Java sẽ không chỉ tìm kiếm IP mà còn thực hiện quy trình Phân giải Tên miền (DNS Resolution). Quá trình này giúp chuyển đổi một tên miền dễ nhớ thành địa chỉ IP số học mà mạng máy tính thực sự sử dụng để định tuyến gói tin.</p>
+							<p>Điều quan trọng là lớp `InetAddress` cache (lưu trữ tạm thời) kết quả phân giải DNS. Điều này giúp tăng tốc độ truy vấn liên tiếp đến cùng một tên miền.</p>
+
+							<h4 class="mt-4">2. Các phương thức tĩnh quan trọng</h4>
+							<p>Vì `InetAddress` không có constructor công khai, bạn phải sử dụng các phương thức tĩnh để khởi tạo đối tượng:</p>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Phương thức</th>
+										<th>Chức năng</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>getByName(String host)</code></td>
+										<td>Phân giải tên miền/chuỗi IP thành đối tượng `InetAddress`. Nếu tên miền không tồn tại, sẽ ném ra `UnknownHostException`.</td>
+									</tr>
+									<tr>
+										<td><code>getLocalHost()</code></td>
+										<td>Trả về đối tượng `InetAddress` của máy tính đang chạy chương trình.</td>
+									</tr>
+									<tr>
+										<td><code>getAllByName(String host)</code></td>
+										<td>Trả về một mảng `InetAddress` nếu tên miền đó trỏ tới nhiều máy chủ (thường dùng cho cân bằng tải).</td>
+									</tr>
+									<tr>
+										<td><code>getHostAddress()</code></td>
+										<td>Trả về chuỗi địa chỉ IP (ví dụ: `172.217.167.142`).</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<h4 class="mt-4">3. Code minh họa chuyên sâu</h4>
+							<p>Ví dụ dưới đây minh họa cách lấy tất cả các địa chỉ IP liên quan đến một tên miền lớn (như Facebook) và kiểm tra xem một host có thể truy cập được không:</p>
 							<pre><code class="language-java">
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class InetAddressExample {
+public class AdvancedInetAddress {
     public static void main(String[] args) {
         try {
-            // Phân giải tên miền google.com
-            InetAddress address = InetAddress.getByName("google.com");
-            System.out.println("Hostname: " + address.getHostName());
-            System.out.println("IP Address: " + address.getHostAddress());
+            // Lấy tất cả các IP cho một host
+            InetAddress[] addresses = InetAddress.getAllByName("facebook.com");
+            System.out.println("--- IP Addresses for Facebook ---");
+            for (InetAddress address : addresses) {
+                System.out.println("-> IP: " + address.getHostAddress());
+                // Kiểm tra khả năng truy cập (Ping cơ bản)
+                if (address.isReachable(5000)) { 
+                    System.out.println("   (Reachable within 5 seconds)");
+                }
+            }
 
-            // Lấy thông tin máy local
-            InetAddress localAddress = InetAddress.getLocalHost();
-            System.out.println("Local Hostname: " + localAddress.getHostName());
-            System.out.println("Local IP Address: " + localAddress.getHostAddress());
-
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
 							</code></pre>
+
 							<blockquote class="blockquote">
-								<p>Việc sử dụng thành thạo lớp <code>InetAddress</code> là bước đầu tiên và cơ bản nhất để xác định và tương tác với các thiết bị khác trên mạng.</p>
+								<p>Lớp <code>InetAddress</code> là bộ phận phiên dịch của Java, chuyển đổi ngôn ngữ của con người (tên miền) sang ngôn ngữ của máy tính (địa chỉ IP) để giao tiếp mạng có thể diễn ra.</p>
 							</blockquote>
 						</div>
 					</article>

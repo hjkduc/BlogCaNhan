@@ -78,18 +78,51 @@
 						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 6</span>
 						<h2 class="mb-1 mt-2 post-title"><a href="#">Lập trình Socket UDP: Khi tốc độ là ưu tiên hàng đầu</a></h2>
 						<div class="post-content mt-4">
-							<p>Trái ngược với TCP, <strong>UDP (User Datagram Protocol)</strong> là một giao thức <strong>phi kết nối (connectionless)</strong>. Nó hoạt động theo triết lý "gửi và quên", không cần thiết lập kết nối, giúp giảm thiểu độ trễ và tăng tốc độ truyền tải.</p>
-							<p>Tuy nhiên, sự đánh đổi là UDP không đảm bảo độ tin cậy. Gói tin (datagram) có thể bị mất, đến sai thứ tự hoặc bị lặp lại mà không có bất kỳ thông báo nào.</p>
-							<h4 class="mt-4">Khi nào thì "không đáng tin cậy" lại là một lợi thế?</h4>
-							<p>UDP tỏa sáng trong các ứng dụng mà tốc độ quan trọng hơn sự toàn vẹn của một vài gói tin:</p>
+							<p>Giao thức UDP (User Datagram Protocol) hoàn toàn trái ngược với TCP. UDP là một giao thức phi kết nối (connectionless) và không đáng tin cậy. Nó hoạt động theo triết lý "gửi và quên" (fire and forget). Khi bạn gửi một gói tin UDP (Datagram), bạn không biết liệu nó có đến đích hay không, có bị lặp lại hay đến sai thứ tự hay không.</p>
+
+							<h4 class="mt-4">1. So sánh TCP và UDP: Quyết định thiết kế</h4>
+							<p>Việc lựa chọn giữa TCP và UDP là một quyết định thiết kế quan trọng, dựa trên sự cân bằng giữa tốc độ và độ tin cậy:</p>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Đặc điểm</th>
+										<th>TCP (Transmission Control Protocol)</th>
+										<th>UDP (User Datagram Protocol)</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Mô hình</td>
+										<td>Hướng kết nối (Cần bắt tay 3 bước)</td>
+										<td>Phi kết nối (Không cần bắt tay)</td>
+									</tr>
+									<tr>
+										<td>Độ tin cậy</td>
+										<td>Cao (Đảm bảo dữ liệu đến, không mất, đúng thứ tự)</td>
+										<td>Thấp (Không đảm bảo)</td>
+									</tr>
+									<tr>
+										<td>Tốc độ</td>
+										<td>Chậm hơn (Do cần ACK và kiểm soát luồng)</td>
+										<td>Nhanh hơn (Ít overhead)</td>
+									</tr>
+									<tr>
+										<td>Ứng dụng</td>
+										<td>HTTP, FTP, Email (cần chính xác)</td>
+										<td>Game online, Video/Voice Streaming, DNS (cần tốc độ)</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<h4 class="mt-4">2. Các lớp Java cho Socket UDP</h4>
+							<p>Lập trình UDP trong Java xoay quanh hai lớp chính:</p>
 							<ul>
-								<li><strong>Game Online:</strong> Gửi liên tục vị trí của người chơi. Mất một gói tin không quá nghiêm trọng vì gói tin sau sẽ cập nhật trạng thái mới nhất.</li>
-								<li><strong>Video/Voice Call:</strong> Thà bị giật hình một chút còn hơn là phải dừng hình để chờ nhận lại gói tin đã cũ.</li>
-								<li><strong>Truy vấn DNS:</strong> Các truy vấn tên miền cần được phản hồi nhanh nhất có thể.</li>
+								<li>`DatagramSocket`: Là Socket được sử dụng để gửi và nhận các gói tin Datagram. Nó không cần thiết lập kết nối.</li>
+								<li>`DatagramPacket`: Là gói tin thực tế được gửi qua mạng. Mỗi gói tin chứa dữ liệu (byte array), địa chỉ IP đích, và Port đích.</li>
 							</ul>
-							<h4 class="mt-4">Code minh họa trong Java</h4>
-							<p>Lập trình UDP trong Java xoay quanh hai lớp: `DatagramSocket` (để gửi và nhận) và `DatagramPacket` (chính là các gói tin).</p>
-							<p><strong>Ví dụ phía Server (Receiver):</strong></p>
+
+							<h4 class="mt-4">3. Code chi tiết: Gửi và nhận gói tin</h4>
+							<p>Server.java (Receiver):</p>
 							<pre><code>
 // UDPServer.java
 import java.net.*;
@@ -107,7 +140,7 @@ public class UDPServer {
     }
 }
 							</code></pre>
-							<p><strong>Ví dụ phía Client (Sender):</strong></p>
+							<p>Client.java (Sender):</p>
 							<pre><code>
 // UDPClient.java
 import java.net.*;
@@ -122,6 +155,7 @@ public class UDPClient {
     }
 }
 							</code></pre>
+
 							<blockquote class="blockquote">
 								<p>UDP là minh chứng cho việc không có giải pháp nào tốt nhất cho mọi vấn đề. Sự đánh đổi giữa tốc độ và độ tin cậy là một quyết định thiết kế quan trọng.</p>
 							</blockquote>

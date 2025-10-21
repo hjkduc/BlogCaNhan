@@ -77,56 +77,84 @@
 				<div class="col-lg-8 col-md-8">
 					<article class="post-grid mb-5">
 						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 5</span>
-						<h2 class="mb-1 mt-2 post-title"><a href="#">Lập trình Socket TCP: Nền tảng của Mạng Internet tin cậy</a></h2>
+						<h2 class="mb-1 mt-2 post-title"><a href="#">Lập trình Socket TCP: Xây dựng mô hình Client-Server tin cậy</a></h2>
 						<div class="post-content mt-4">
-							<p>Khi nói về lập trình mạng, không thể không nhắc đến <strong>TCP (Transmission Control Protocol)</strong>. Đây là giao thức nền tảng đảm bảo cho hầu hết các hoạt động quan trọng trên Internet, từ việc bạn truy cập trang web (HTTP/HTTPS), gửi email (SMTP), cho đến tải tệp tin (FTP).</p>
-							<p>Điểm cốt lõi làm nên sức mạnh của TCP là <strong>tính hướng kết nối (connection-oriented)</strong> và <strong>độ tin cậy (reliability)</strong>. Trước khi dữ liệu được truyền đi, Client và Server phải thiết lập kết nối ổn định qua quy trình <strong>"Bắt tay ba bước" (Three-Way Handshake)</strong>.</p>
-							<h4 class="mt-4">"Bắt tay ba bước" hoạt động như thế nào?</h4>
-							<ol>
-								<li><strong>(SYN)</strong>: Client gửi gói tin SYN (Synchronize) đến Server: "Chào Server, tôi muốn kết nối."</li>
-								<li><strong>(SYN-ACK)</strong>: Server gửi lại gói tin SYN-ACK (Synchronize-Acknowledge): "Chào Client, tôi đồng ý kết nối."</li>
-								<li><strong>(ACK)</strong>: Client gửi lại gói tin ACK (Acknowledge): "Tuyệt vời, bắt đầu truyền dữ liệu thôi!"</li>
-							</ol>
-							<p>Quy trình này đảm bảo cả hai bên đều sẵn sàng trước khi trao đổi thông tin quan trọng.</p>
-							<h4 class="mt-4">Code minh họa trong Java</h4>
-							<p><strong>Ví dụ phía Server:</strong></p>
+							<p>Giao thức TCP (Transmission Control Protocol) là xương sống của các ứng dụng mạng cần sự chính xác tuyệt đối. TCP đảm bảo rằng mọi gói tin được gửi đi đều đến đích theo đúng thứ tự, không bị mất, không bị trùng lặp. Đây là lý do TCP được gọi là giao thức hướng kết nối và tin cậy.</p>
+							
+							<h4 class="mt-4">1. Quy trình kết nối và ngắt kết nối TCP</h4>
+							<p>Kết nối TCP được thiết lập thông qua quy trình "Bắt tay ba bước" (Three-Way Handshake), và ngắt kết nối bằng "Bắt tay bốn bước" (Four-Way Handshake). Sự phức tạp này nhằm đảm bảo tính toàn vẹn của dữ liệu:</p>
+							<ul>
+								<li>Khởi tạo (`ServerSocket`): Server khởi tạo `ServerSocket` để lắng nghe tại một Port cụ thể (trạng thái LISTENING).</li>
+								<li>Kết nối (`Socket`): Client tạo `Socket` để gửi yêu cầu SYN đến Server.</li>
+								<li>Chấp nhận (`accept()`): Server chấp nhận kết nối, tạo ra một `Socket` mới cho phiên giao tiếp này (kết nối đã được thiết lập).</li>
+							</ul>
+
+							<h4 class="mt-4">2. Các lớp Java cho Socket TCP</h4>
+							<p>Lập trình TCP trong Java chỉ cần hai lớp chính trong gói `java.net`:</p>
+							<ul>
+								<li>`ServerSocket` (Phía Server): Được sử dụng để chờ đợi và lắng nghe các yêu cầu kết nối từ Client. Phương thức quan trọng nhất là `accept()`, nó khóa luồng cho đến khi có Client kết nối thành công.</li>
+								<li>`Socket` (Phía Client và Phiên giao tiếp trên Server): Được sử dụng bởi Client để gửi yêu cầu kết nối, và được Server tạo ra sau khi chấp nhận Client. Đây là nơi lấy `InputStream` và `OutputStream` để trao đổi dữ liệu.</li>
+							</ul>
+
+							<h4 class="mt-4">3. Code chi tiết: Thiết lập Client và Server</h4>
+							<p>Mô hình Server đơn giản sẽ lắng nghe và trả lời một Client:</p>
+							<p>Server.java: Lớp lắng nghe</p>
 							<pre><code>
 // Server.java
 import java.net.*;
 import java.io.*;
 public class TCPServer {
     public static void main(String[] args) throws IOException {
-        ServerSocket welcomeSocket = new ServerSocket(6789);
-        System.out.println("Server is waiting...");
-        Socket connectionSocket = welcomeSocket.accept();
-        System.out.println("Client connected!");
+        int port = 6789;
+        ServerSocket welcomeSocket = new ServerSocket(port);
+        System.out.println("Server listening on port " + port + "...");
+        
+        Socket connectionSocket = welcomeSocket.accept(); // Chờ Client
+        System.out.println("Client connected: " + connectionSocket.getInetAddress());
+
+        // Lấy luồng nhập/xuất để trao đổi dữ liệu
         BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+        PrintWriter outToClient = new PrintWriter(connectionSocket.getOutputStream(), true);
+
         String clientSentence = inFromClient.readLine();
-        String capitalizedSentence = clientSentence.toUpperCase() + '\n';
-        outToClient.writeBytes(capitalizedSentence);
+        System.out.println("RECEIVED: " + clientSentence);
+        outToClient.println("Server acknowledges: " + clientSentence.toUpperCase());
+
+        connectionSocket.close();
+        welcomeSocket.close();
     }
 }
-							</code></pre>
-							<p><strong>Ví dụ phía Client:</strong></p>
+        </code></pre>
+							<p>Client.java: Lớp yêu cầu kết nối</p>
 							<pre><code>
 // Client.java
 import java.net.*;
 import java.io.*;
 public class TCPClient {
     public static void main(String[] args) throws IOException {
-        Socket clientSocket = new Socket("localhost", 6789);
-        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+        String serverHost = "localhost";
+        int port = 6789;
+        
+        // Gửi yêu cầu kết nối
+        Socket clientSocket = new Socket(serverHost, port);
+        
+        // Lấy luồng nhập/xuất để trao đổi dữ liệu
+        PrintWriter outToServer = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        outToServer.writeBytes("hello server" + '\n');
+
+        String message = "Hello Server from TCP Client!";
+        outToServer.println(message);
+
         String modifiedSentence = inFromServer.readLine();
         System.out.println("FROM SERVER: " + modifiedSentence);
+        
         clientSocket.close();
     }
 }
-							</code></pre>
+        </code></pre>
+
 							<blockquote class="blockquote">
-								<p>TCP là sự lựa chọn mặc định khi sự toàn vẹn dữ liệu là tuyệt đối quan trọng.</p>
+								<p>TCP là sự lựa chọn mặc định khi sự toàn vẹn và thứ tự dữ liệu là tuyệt đối quan trọng (ví dụ: giao dịch ngân hàng, truyền file, HTTP).</p>
 							</blockquote>
 						</div>
 					</article>

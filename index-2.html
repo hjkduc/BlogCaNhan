@@ -76,20 +76,38 @@
 				<div class="col-lg-8 col-md-8">
 					<article class="post-grid mb-5">
 						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 1</span>
-						<h2 class="mb-1 mt-2 post-title"><a href="#">Tổng quan về Lập trình mạng</a></h2>
+						<h2 class="mb-1 mt-2 post-title"><a href="#">Tổng quan về Lập trình mạng: Tầm quan trọng và Kiến trúc</a></h2>
 						<div class="post-content mt-4">
-							<p>Chào mừng các bạn đến với môn học <strong>Lập trình mạng</strong>. Đây là môn học cung cấp những kiến thức nền tảng và kỹ năng cần thiết để xây dựng các ứng dụng có khả năng giao tiếp với nhau qua mạng máy tính.</p>
-							<p>Trong suốt khóa học, chúng ta sẽ cùng nhau tìm hiểu về các mô hình mạng phổ biến, các giao thức cốt lõi như TCP và UDP, cũng như cách xây dựng ứng dụng Client-Server hoàn chỉnh.</p>
-							<h4 class="mt-4">Nội dung chính của khóa học:</h4>
+							<p>Chào mừng bạn đến với môn học Lập trình mạng—một trong những lĩnh vực cốt lõi và thú vị nhất của Khoa học Máy tính. Trong thế giới hiện đại, hầu hết các ứng dụng đều cần kết nối mạng để hoạt động, từ các ứng dụng di động đơn giản đến các hệ thống thương mại điện tử khổng lồ. Môn học này không chỉ cung cấp kiến thức nền tảng mà còn trang bị kỹ năng thực tế để bạn xây dựng được những ứng dụng có khả năng giao tiếp và trao đổi dữ liệu qua mạng máy tính.</p>
+
+							<h4 class="mt-4">1. Lập trình mạng là gì và tại sao nó quan trọng?</h4>
+							<p>Lập trình mạng là quá trình thiết kế, viết và triển khai các chương trình có khả năng thực hiện các hoạt động thông qua một mạng lưới, điển hình là Internet. Tầm quan trọng của nó không thể phủ nhận:</p>
 							<ul>
-								<li><strong>Kiến thức nền tảng:</strong> Tìm hiểu về các khái niệm cơ bản như địa chỉ IP, cổng (port), và mô hình TCP/IP.</li>
-								<li><strong>Lập trình Socket:</strong> Đi sâu vào Socket API, công cụ chính để tạo ra các kết nối mạng.</li>
-								<li><strong>Giao thức TCP và UDP:</strong> Phân biệt và ứng dụng hai giao thức vận chuyển quan trọng nhất.</li>
-								<li><strong>Xử lý đa luồng:</strong> Xây dựng các máy chủ có khả năng phục vụ nhiều người dùng cùng lúc.</li>
-								<li><strong>Các kỹ thuật nâng cao:</strong> Tìm hiểu về Multicast và Java RMI.</li>
+								<li>Kết nối toàn cầu: Cho phép các thiết bị vật lý và phần mềm ở các vị trí địa lý khác nhau giao tiếp, tạo nên Internet.</li>
+								<li>Xây dựng hệ thống phân tán: Nền tảng cho Cloud Computing, Big Data, và các hệ thống Server-Client phức tạp.</li>
+								<li>Tương tác thời gian thực: Đảm bảo khả năng chat, gọi video, và chơi game online không bị gián đoạn.</li>
 							</ul>
+
+							<h4 class="mt-4">2. Mô hình TCP/IP: Kiến trúc nền tảng</h4>
+							<p>Trước khi đi sâu vào code, chúng ta cần hiểu kiến trúc mà mọi giao tiếp mạng dựa vào: Mô hình TCP/IP. Đây là một mô hình đơn giản hóa, tập trung vào các giao thức chính được sử dụng trên Internet:</p>
+							<ol>
+								<li>Tầng Ứng dụng (Application Layer): Nơi các ứng dụng của người dùng hoạt động (HTTP, FTP, SMTP). Các ứng dụng mạng Java của chúng ta sẽ làm việc chủ yếu ở tầng này.</li>
+								<li>Tầng Vận chuyển (Transport Layer): Chịu trách nhiệm cho việc truyền dữ liệu cuối-đến-cuối. Hai giao thức chính là TCP (tin cậy, có kết nối) và UDP (nhanh, phi kết nối).</li>
+								<li>Tầng Mạng (Internet Layer): Xử lý định tuyến và địa chỉ hóa (chủ yếu là giao thức IP).</li>
+								<li>Tầng Liên kết Dữ liệu/Vật lý (Data Link/Physical Layer): Xử lý việc truyền dữ liệu vật lý qua cáp hoặc sóng vô tuyến.</li>
+							</ol>
+							<p>Việc hiểu rõ tầng nào làm nhiệm vụ gì giúp chúng ta lựa chọn giao thức và lớp lập trình phù hợp (ví dụ: dùng Socket TCP hay Datagram UDP).</p>
+
+							<h4 class="mt-4">3. Lộ trình học tập chi tiết</h4>
+							<p>Khóa học này sẽ đưa bạn đi từ những khái niệm cơ bản nhất đến các kỹ thuật nâng cao:</p>
+							<ul>
+								<li>Giai đoạn 1 (Cơ bản): IP, Port, Stream I/O, và lớp `InetAddress`.</li>
+								<li>Giai đoạn 2 (Cốt lõi): Lập trình Socket TCP (Server và Client) và UDP.</li>
+								<li>Giai đoạn 3 (Nâng cao): Xây dựng Server Đa tuyến, Multicast, và Java RMI để giải quyết các bài toán phức tạp và mở rộng.</li>
+							</ul>
+							
 							<blockquote class="blockquote">
-								<p>Môn học này không chỉ dạy bạn cách viết mã, mà còn giúp bạn hiểu được cách Internet hoạt động ở tầng sâu hơn.</p>
+								<p>Lập trình mạng là cây cầu nối các hệ thống máy tính lại với nhau. Hãy bắt đầu xây dựng cây cầu của riêng bạn!</p>
 							</blockquote>
 						</div>
 					</article>

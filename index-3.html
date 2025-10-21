@@ -77,17 +77,36 @@
 				<div class="col-lg-8 col-md-8">
 					<article class="post-grid mb-5">
 						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 2</span>
-						<h2 class="mb-1 mt-2 post-title"><a href="#">Những khái niệm cốt lõi trong Lập trình mạng</a></h2>
+						<h2 class="mb-1 mt-2 post-title"><a href="#">Những khái niệm cốt lõi: IP, Port và Vai trò của Socket</a></h2>
 						<div class="post-content mt-4">
-							<p>Để xây dựng được một ứng dụng mạng, chúng ta cần nắm vững những khái niệm nền tảng. Đây là những "viên gạch" đầu tiên tạo nên mọi giao tiếp trên Internet.</p>
-							<h4 class="mt-4">1. Địa chỉ IP (Internet Protocol)</h4>
-							<p>Mỗi thiết bị kết nối vào mạng đều được cấp một địa chỉ IP duy nhất. Nó giống như địa chỉ nhà của bạn, giúp các thiết bị khác biết phải gửi dữ liệu đến đâu. Có hai phiên bản chính là <strong>IPv4</strong> (ví dụ: <code>192.168.1.1</code>) và <strong>IPv6</strong>. Trong Java, lớp <code>InetAddress</code> được dùng để biểu diễn và thao tác với địa chỉ IP.</p>
-							<h4 class="mt-4">2. Cổng (Port)</h4>
-							<p>Nếu IP là địa chỉ của tòa nhà, thì cổng chính là số căn hộ. Trên một máy tính có thể chạy nhiều ứng dụng mạng cùng lúc (trình duyệt, game, chat,...). Cổng giúp hệ điều hành biết chính xác gói tin này dành cho ứng dụng nào. Các cổng nổi tiếng bao gồm <strong>80</strong> (HTTP), <strong>443</strong> (HTTPS), và <strong>21</strong> (FTP).</p>
-							<h4 class="mt-4">3. Socket</h4>
-							<p>Socket là một "cổng giao tiếp" phần mềm mà ứng dụng sử dụng để gửi và nhận dữ liệu qua mạng. Nó là sự kết hợp của một địa chỉ IP và một số hiệu cổng. Khi một ứng dụng muốn giao tiếp, nó sẽ tạo ra một Socket và gắn nó vào một cổng cụ thể.</p>
+							<p>Để giao tiếp mạng thành công, chúng ta cần một hệ thống địa chỉ chính xác. Hệ thống này bao gồm hai thành phần không thể tách rời: Địa chỉ IP và Cổng (Port). Giống như việc gửi thư, bạn cần cả địa chỉ nhà (IP) và tên người nhận cụ thể bên trong (Port).</p>
+
+							<h4 class="mt-4">1. Địa chỉ IP: Định danh thiết bị</h4>
+							<p>Mỗi thiết bị trên mạng, từ máy tính, điện thoại đến router, đều có một Địa chỉ IP. IP là viết tắt của Internet Protocol, giao thức chịu trách nhiệm chính trong việc định tuyến gói tin giữa các mạng. Chúng ta chủ yếu sử dụng hai phiên bản:</p>
+							<ul>
+								<li>IPv4 (Internet Protocol version 4): Chuỗi 32-bit (ví dụ: `192.168.1.1`). Đây là phiên bản truyền thống nhưng đã cạn kiệt địa chỉ.</li>
+								<li>IPv6 (Internet Protocol version 6): Chuỗi 128-bit (ví dụ: `2001:db8:85a3:0:0:8a2e:370:7334`). Được tạo ra để giải quyết sự thiếu hụt địa chỉ IPv4.</li>
+							</ul>
+							<p>Trong Java, lớp `InetAddress` là công cụ chính để làm việc với các địa chỉ IP này.</p>
+
+							<h4 class="mt-4">2. Cổng (Port): Định danh ứng dụng</h4>
+							<p>Một địa chỉ IP chỉ xác định được máy tính. Nhưng làm thế nào để gói tin biết nó dành cho ứng dụng nào (trình duyệt web, ứng dụng chat, FTP server...)? Đó là vai trò của Port. Port là một số hiệu 16-bit (từ 0 đến 65535) được gán cho một tiến trình đang lắng nghe trên máy tính.</p>
+							<ul>
+								<li>Cổng nổi tiếng (Well-Known Ports, 0-1023): Dành cho các dịch vụ mạng tiêu chuẩn (ví dụ: HTTP 80, HTTPS 443, FTP 21).</li>
+								<li>Cổng đã đăng ký (Registered Ports, 1024-49151): Dùng cho các ứng dụng của người dùng.</li>
+								<li>Cổng động (Dynamic/Private Ports, 49152-65535): Dùng tạm thời cho các kết nối Client đi.</li>
+							</ul>
+
+							<h4 class="mt-4">3. Socket: Cổng giao tiếp trong lập trình</h4>
+							<p>Socket không phải là một giao thức mạng, mà là một giao diện lập trình ứng dụng (API). Nó kết hợp địa chỉ IP và Port để tạo ra một điểm cuối (endpoint) cho giao tiếp. Mọi hoạt động gửi và nhận dữ liệu trong lập trình mạng (Java Socket Programming) đều được thực hiện thông qua Socket. </p>
+							<p>Về cơ bản, một Socket là:</p>
+							<pre><code class="language-plaintext">
+(Địa chỉ IP nguồn : Port nguồn) &lt;---&gt; (Địa chỉ IP đích : Port đích)
+							</code></pre>
+							<p>Trong lập trình TCP, chúng ta sử dụng `Socket` cho Client và `ServerSocket` cho Server để tạo ra các điểm cuối này.</p>
+
 							<blockquote class="blockquote">
-								<p>Hiểu rõ IP, Port và Socket là chìa khóa để gỡ lỗi và thiết kế các ứng dụng mạng hiệu quả.</p>
+								<p>Hiểu rõ IP, Port và Socket là chìa khóa để gỡ lỗi và thiết kế các ứng dụng mạng hiệu quả. Chúng là những khái niệm nền tảng mà mọi lập trình viên mạng cần nắm vững.</p>
 							</blockquote>
 						</div>
 					</article>

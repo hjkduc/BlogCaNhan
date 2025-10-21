@@ -77,28 +77,41 @@
 				<div class="col-lg-8 col-md-8">
 					<article class="post-grid mb-5">
 						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Buổi 3</span>
-						<h2 class="mb-1 mt-2 post-title"><a href="#">Stream I/O: Dòng chảy dữ liệu trong Java</a></h2>
+						<h2 class="mb-1 mt-2 post-title"><a href="#">Stream I/O: Dòng chảy dữ liệu hiệu quả trong Java Socket</a></h2>
 						<div class="post-content mt-4">
-							<p>Trong Java, mọi hoạt động nhập/xuất (I/O) đều dựa trên khái niệm <strong>Stream (luồng)</strong>. Một luồng là một chuỗi dữ liệu tuần tự, có thể đến từ nhiều nguồn khác nhau như file, bàn phím, hoặc một kết nối mạng.</p>
-							<p>Khi lập trình Socket, chúng ta sử dụng các luồng để gửi và nhận dữ liệu giữa Client và Server.</p>
-							<h4 class="mt-4">Các loại Stream chính:</h4>
+							<p>Trong Java, mọi hoạt động nhập/xuất (I/O), bao gồm cả việc gửi và nhận dữ liệu qua mạng, đều được xử lý thông qua khái niệm Stream (luồng). Một luồng là một chuỗi dữ liệu tuần tự, có thể là đầu vào (đọc) hoặc đầu ra (ghi). Luồng giúp trừu tượng hóa nguồn gốc dữ liệu, cho phép bạn xử lý dữ liệu từ một file, một kết nối mạng, hay bàn phím bằng các phương thức nhất quán.</p>
+
+							<h4 class="mt-4">1. Các loại Stream và vai trò của chúng trong mạng</h4>
+							<p>Java I/O được chia làm hai loại chính, rất quan trọng khi làm việc với Socket:</p>
 							<ul>
-								<li><strong>InputStream:</strong> Luồng dùng để đọc dữ liệu. Phương thức cốt lõi là <code>read()</code>.</li>
-								<li><strong>OutputStream:</strong> Luồng dùng để ghi dữ liệu. Phương thức cốt lõi là <code>write()</code>.</li>
+								<li>Byte Streams (`InputStream`, `OutputStream`): Xử lý dữ liệu dưới dạng byte. Đây là các luồng cơ bản được sử dụng để truyền tải dữ liệu nhị phân (hình ảnh, video) hoặc dữ liệu mạng ở tầng thấp. Các phương thức cốt lõi là `read()` và `write()`.</li>
+								<li>Character Streams (`Reader`, `Writer`): Xử lý dữ liệu dưới dạng ký tự (Unicode). Thường được sử dụng để gửi văn bản, giúp dễ dàng xử lý các mã hóa ngôn ngữ khác nhau.</li>
 							</ul>
-							<p>Java cung cấp nhiều lớp "trang trí" (Decorator) để tăng cường chức năng cho các luồng cơ bản. Ví dụ, để gửi văn bản một cách hiệu quả qua Socket, chúng ta thường làm như sau:</p>
+							<p>Khi bạn nhận được một `Socket` từ Server, bạn sẽ lấy hai luồng cơ bản là `InputStream` và `OutputStream` để bắt đầu giao tiếp.</p>
+
+							<h4 class="mt-4">2. Kỹ thuật "Bọc" Stream (Decorators)</h4>
+							<p>Các luồng cơ bản (như `Socket.getInputStream()`) thường chỉ đọc/ghi từng byte một. Để tăng cường hiệu suất và tính năng, chúng ta sử dụng các lớp "bọc" (Wrapper/Decorator):</p>
+							<ul>
+								<li>BufferedReader / PrintWriter: Các lớp này giúp đọc/ghi văn bản theo từng dòng (`readLine()`, `println()`), rất tiện lợi cho các giao thức dựa trên văn bản.</li>
+								<li>DataInputStream / DataOutputStream: Cho phép đọc/ghi các kiểu dữ liệu nguyên thủy của Java (như `int`, `long`, `double`) một cách hiệu quả, không cần tự mình chuyển đổi byte.</li>
+								<li>BufferedInputStream / BufferedOutputStream: Thêm bộ đệm (buffer) để giảm số lần truy cập vật lý vào mạng, tăng tốc độ truyền tải đáng kể.</li>
+							</ul>
+
+							<h4 class="mt-4">3. Ví dụ về việc sử dụng Stream qua Socket</h4>
+							<p>Để giao tiếp Client-Server bằng văn bản, bạn thường kết hợp các lớp Stream như sau:</p>
 							<pre><code class="language-java">
-// Lấy luồng output cơ bản từ Socket
-OutputStream outputStream = socket.getOutputStream();
+// Server nhận dữ liệu văn bản từ Client
+BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+String clientMessage = reader.readLine();
 
-// Bọc nó bằng một PrintWriter để có thể gửi văn bản theo từng dòng
-PrintWriter writer = new PrintWriter(outputStream, true); // true để tự động flush
-
-// Gửi dữ liệu
-writer.println("Hello Server!");
+// Server gửi lại dữ liệu văn bản cho Client
+PrintWriter writer = new PrintWriter(socket.getOutputStream(), true); // 'true' là auto-flush
+writer.println("Message received!");
 							</code></pre>
+							<p>Việc kết hợp các lớp Stream một cách khéo léo là yếu tố then chốt để việc xử lý dữ liệu mạng trở nên đơn giản, hiệu quả và mạnh mẽ hơn rất nhiều.</p>
+
 							<blockquote class="blockquote">
-								<p>Việc kết hợp các lớp Stream một cách khéo léo giúp việc xử lý dữ liệu mạng trở nên đơn giản và mạnh mẽ hơn rất nhiều.</p>
+								<p>Luồng I/O là dòng máu của ứng dụng mạng. Nắm vững cách quản lý luồng là nắm vững cách dữ liệu được luân chuyển trong hệ thống của bạn.</p>
 							</blockquote>
 						</div>
 					</article>
